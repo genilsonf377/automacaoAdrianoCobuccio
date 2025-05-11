@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 7 * * *' # Executa todo dia às 07:00 UTC
+    - cron: '0 7 * * *'
 
 jobs:
   cypress-run:
@@ -41,14 +41,14 @@ jobs:
           npx allure open allure-report || echo "Falha ao abrir o relatório (ignorado no CI)"
 
       - name: Publicar relatório como artefato
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: allure-report
-          path: allure-report/**  # Certifique-se de enviar todos os arquivos da pasta
+          path: allure-report
 
       - name: Notificar no Slack em caso de falha
         if: failure()
         run: |
           curl -X POST -H 'Content-type: application/json' \
             --data '{"text":"❌ Testes Cypress com Allure falharam no workflow do GitHub Actions!"}' \
-            ${{ secrets.SLACK_WEBHOOK }}
+            ${{ secrets.SLACK_WEBHOOK }}
