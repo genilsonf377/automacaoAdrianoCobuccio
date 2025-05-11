@@ -2,7 +2,7 @@ name: Cypress + Allure Report
 
 on:
   push:
-     branches:
+    branches:
       - main
   schedule:
     - cron: '0 7 * * *' # Executa todo dia às 07:00 UTC
@@ -12,15 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo para limpar o cache de Ações do GitHub, se necessário
-      - name: Limpar Cache do GitHub Actions
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: ${{ runner.os }}-build-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-
       # Passo para fazer checkout do código
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -58,7 +49,7 @@ jobs:
 
       # Publicar o relatório como artefato
       - name: Publicar relatório como artefato
-        uses: actions/upload-artifact@f61f23356b604fdbf4e95d6a0af2e4b7dc497f78
+        uses: actions/upload-artifact@v3
         with:
           name: allure-report
           path: allure-report/**  # Garantir que todos os arquivos da pasta sejam enviados
