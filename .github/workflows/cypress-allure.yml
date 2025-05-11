@@ -41,7 +41,8 @@ jobs:
           npx allure open allure-report || echo "Falha ao abrir o relatório (ignorado no CI)"
 
       - name: Publicar relatório como artefato
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
+
         with:
           name: allure-report
           path: allure-report/**  # Garantir que todos os arquivos dentro da pasta sejam enviados
