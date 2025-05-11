@@ -3,7 +3,7 @@ name: Cypress + Allure Report
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: '0 7 * * *' # 07:00 UTC todos os dias
 

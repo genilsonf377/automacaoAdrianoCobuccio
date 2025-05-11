@@ -131,7 +131,7 @@ Essa abordagem mantém o projeto modular e facilita sua escalabilidade, melhoran
 
 Este projeto também conta com um workflow de CI que:
 
-* Executa os testes sempre que houver push na branch `master`
+* Executa os testes sempre que houver push na branch `main`
 * Executa diariamente às 07:00 da manhã (UTC)
 * Gera o relatório Allure
 * Envia uma notificação para um webhook do Slack em caso de falha
