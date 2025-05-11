@@ -1,4 +1,4 @@
-name: Cypress + Allure Report
+name: Cypress
 
 on:
   push:
@@ -22,8 +22,8 @@ jobs:
         with:
           node-version: '18'
 
-      # Instalar Java (necessário para o Allure)
-      - name: Instalar Java (necessário para o Allure)
+      # Instalar Java (caso precise de alguma dependência)
+      - name: Instalar Java (caso necessário)
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -33,31 +33,14 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      # Instalar Allure CLI (local)
-      - name: Instalar Allure CLI (local)
-        run: npm install -D allure-commandline
-
       # Executar testes com Cypress
       - name: Executar testes com Cypress
-        run: npx cypress run --env allure=true
-
-      # Gerar relatório Allure
-      - name: Gerar relatório Allure
-        run: |
-          npx allure generate allure-results --clean -o allure-report
-          npx allure open allure-report || echo "Falha ao abrir o relatório (ignorado no CI)"
-
-      # Publicar o relatório como artefato
-      - name: Publicar relatório como artefato
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-report
-          path: allure-report/**  # Garantir que todos os arquivos da pasta sejam enviados
+        run: npx cypress run
 
       # Notificar no Slack em caso de falha
       - name: Notificar no Slack em caso de falha
-        if: failure()
+        if: failure()  # Só executa se houver falha
         run: |
           curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"❌ Testes Cypress com Allure falharam no workflow do GitHub Actions!"}' \
+            --data '{"text":"❌ Testes Cypress falharam no workflow do GitHub Actions!"}' \
             ${{ secrets.SLACK_WEBHOOK }}
