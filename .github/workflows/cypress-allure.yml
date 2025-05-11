@@ -5,51 +5,68 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '0 7 * * *' # Executa todo dia às 07:00 UTC
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
     steps:
+      # Passo para limpar o cache de Ações do GitHub, se necessário
+      - name: Limpar Cache do GitHub Actions
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: ${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+
+      # Passo para fazer checkout do código
       - name: Checkout do código
         uses: actions/checkout@v3
 
+      # Instalar Node.js
       - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # Instalar Java (necessário para o Allure)
       - name: Instalar Java (necessário para o Allure)
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
 
+      # Instalar dependências
       - name: Instalar dependências
         run: npm ci
 
+      # Instalar Allure CLI (local)
       - name: Instalar Allure CLI (local)
         run: npm install -D allure-commandline
 
+      # Executar testes com Cypress
       - name: Executar testes com Cypress
         run: npx cypress run --env allure=true
 
+      # Gerar relatório Allure
       - name: Gerar relatório Allure
         run: |
           npx allure generate allure-results --clean -o allure-report
           npx allure open allure-report || echo "Falha ao abrir o relatório (ignorado no CI)"
 
+      # Publicar o relatório como artefato
       - name: Publicar relatório como artefato
-        uses: actions/upload-artifact@f61f23356b604fdbf4e95d6a0af2e4b7dc497f78
-
+        uses: actions/upload-artifact@v3
         with:
           name: allure-report
-          path: allure-report
+          path: allure-report/**  # Garantir que todos os arquivos da pasta sejam enviados
 
+      # Notificar no Slack em caso de falha
       - name: Notificar no Slack em caso de falha
         if: failure()
         run: |
           curl -X POST -H 'Content-type: application/json' \
             --data '{"text":"❌ Testes Cypress com Allure falharam no workflow do GitHub Actions!"}' \
-            ${{ secrets.SLACK_WEBHOOK }}
+            ${{ secrets.SLACK_WEBHOOK }}
