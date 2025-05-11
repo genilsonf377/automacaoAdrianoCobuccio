@@ -6,6 +6,6 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 import './commands'
 import './utils'
 import './login'
-import './Movimentacao'
+import './movimentacao'
 import './resumo'
 import '@shelex/cypress-allure-plugin'
