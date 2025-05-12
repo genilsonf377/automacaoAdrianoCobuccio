@@ -1,5 +1,5 @@
 
-# Teste tecnico Grupo Adriano Corbbuio 🚀
+# Teste tecnico Grupo Adriano Corbuccio 🚀
 
 Este projeto utiliza **Cypress** para testes automatizados de uma aplicação. Ele foi desenvolvido para validar funcionalidades e assegurar a qualidade do software com testes de interface e validações de fluxo. O projeto inclui relatórios de execução gerados automaticamente, facilitando a análise dos resultados.
 
