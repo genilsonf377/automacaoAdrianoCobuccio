@@ -141,7 +141,7 @@ Para isso, é necessário configurar o segredo `SLACK_WEBHOOK` no repositório d
 ---
 
 ### Agradecimentos 🙏
-Agradeço ao Grupo Adriano Corbbuio pela oportunidade de participar deste desafio. Utilizei Cypress para a automação dos testes, integrando com Allure Report para geração dos relatórios e webhook do Slack para notificações no CI. Foi uma experiência valiosa para aplicar boas práticas e reforçar meus conhecimentos em testes automatizados.
+Agradeço ao Grupo Adriano Corbuccio pela oportunidade de participar deste desafio. Utilizei Cypress para a automação dos testes, integrando com Allure Report para geração dos relatórios e webhook do Slack para notificações no CI. Foi uma experiência valiosa para aplicar boas práticas e reforçar meus conhecimentos em testes automatizados.
 
 Atenciosamente,
 Francisco Genilson.
